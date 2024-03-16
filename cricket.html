@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <style>
+    #game{
+     width: 100%;
+
+    }
+    #heading{
+      display: block;
+     text-align: center;
+    }
+    .buttons{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+     
+    }
+    *{
+      box-sizing: border-box;
+    }
+    @media (max-width: 400px){
+      .btn img {
+        width: 100%;
+        font-size: 1rem;
+      }
+    }
+    .btn{
+      border: none;
+      border-radius: 50%;
+      
+      color: rgb(0, 0, 0);
+      background-color: rgb(100, 222, 222);
+   
+      margin: 5px;
+      width: 30%;
+      cursor: pointer;
+
+    }
+    .btn:hover{
+      border: red solid 1px;
+      transform: translateY(-1px);
+    }
+    .Result{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div id="game">
+    <h1 id="heading">Game</h1>
+    <div class="buttons">
+      <button class="btn" id="bat" onclick=" play('Bat'),displayResult()">
+        <img src="images/bat.png" alt="Bat">
+      </button>
+
+     
+
+      <button class="btn" id="ball" onclick="play('Ball'),displayResult()">
+        <img src="images/ball.png" alt="Bat">
+      </button>
+      <button class="btn" id="stump" onclick=" play('stump'),displayResult()">
+        <img src="images/stump.png" alt="Bat">
+      </button>
+      <button onclick="localStorage.clear(),
+      result ={
+        win:0,
+        lost:0,
+        tie:0,
+      },
+      ClearResult()" class="btn">Reset</button>
+    </div>
+
+
+    <div class="Result">
+      <h3 class="userChoice"></h3>
+      <h3 class="CompChoice"></h3>
+      <h3 class="Score"></h3>
+    </div>
+
+
+   
+  </div>
+
+<script>
+
+
+  
+  
+  let userChoice;
+  let comp;
+  let result ={
+    win:0,
+    lost:0,
+    tie:0,
+  }
+  function ClearResult(){
+    console.log('clear');
+    document.querySelector('.userChoice').innerText = '';
+    document.querySelector('.CompChoice').innerText = '';
+    document.querySelector('.Score').innerText=
+    'Score: '+ 'Win: ' + result.win + ' Lost: ' + result.lost + ' Tie: ' + result.tie;
+  }
+  function displayResult(){
+    
+
+    document.querySelector('.userChoice').innerText = 
+    'User choice: ' + userChoice;
+    document.querySelector('.CompChoice').innerText=
+    'Computer choice: ' + comp;
+    document.querySelector('.Score').innerText=
+    'Score: '+ 'Win: ' + result.win + ' Lost: ' + result.lost + ' Tie: ' + result.tie;
+    
+  }
+
+
+
+  function play(str){
+    userChoice = str;
+    console.log(userChoice);
+    let compChoice = Math.random()*3;
+    
+    if(compChoice > 0 && compChoice <1){
+      comp='Bat';console.log('computer choice: ' +comp);
+    }
+    
+    if(compChoice > 1 && compChoice <2){
+      comp='Ball';console.log('computer choice: ' +comp);
+    }
+    
+    if(compChoice > 2 && compChoice <3){
+      comp='stump';console.log('computer choice: ' +comp);
+    }
+    
+
+    if(userChoice == 'Bat' && comp=='Ball'){
+      console.log('User win');
+      result.win++;
+      localStorage.setItem('result', JSON.stringify(result));
+    }
+
+    
+    if(userChoice == 'Bat' && comp=='Bat'){
+      console.log('tie');
+      result.tie++;
+      localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'Ball' && comp=='Ball'){
+      console.log('tie');
+      result.tie++;
+      localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'stump' && comp=='stump'){
+      console.log('tie');
+      result.tie++;
+      localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'Ball' && comp=='Bat'){
+      console.log('User Lost');
+      result.lost++;localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'Bat' && comp=='stump'){
+      console.log('User lost');
+      result.lost++;localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'Ball' && comp=='stump'){
+      console.log('User win');
+      result.win++;localStorage.setItem('result', JSON.stringify(result));
+    }
+
+    if(userChoice == 'stump' && comp=='Ball'){
+      console.log('User lost');
+      result.lost++;localStorage.setItem('result', JSON.stringify(result));
+    }
+    if(userChoice == 'stump' && comp=='Bat'){
+      console.log('User win');
+      result.win++;localStorage.setItem('result', JSON.stringify(result));
+    }
+
+    
+
+  }
+  
+</script>
+
+
+
+
+
+</body>
+</html>
